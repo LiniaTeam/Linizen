@@ -1,0 +1,7 @@
+name: Linizen
+authors: ['The DenizenScript Team']
+version: 2.1.1 (build Unknown)
+main: org.linia.linizen.Linizen
+depend: [Denizen]
+
+api-version: '1.13'

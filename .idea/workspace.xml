@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f986d0ca-cf72-40e8-b9e5-cf7112099946" name="Changes" comment="fixes, cleanup" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;davight&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/DenizenScript/Depenizen.git&quot;,
+    &quot;accountId&quot;: &quot;0b39ce82-1824-4359-ac4e-99191c2ee0f3&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar://$MAVEN_REPOSITORY$/com/infernalsuite/asp/api/4.0.0-SNAPSHOT/api-4.0.0-20250408.060259-11.jar!/com/infernalsuite/asp/api/world/SlimeWorld.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/infernalsuite/asp/api/4.0.0-SNAPSHOT/api-4.0.0-20250408.060259-11.jar!/com/infernalsuite/asp/api/world/properties/SlimeProperty.class" root0="SKIP_INSPECTION" />
+    <setting file="jar://$MAVEN_REPOSITORY$/com/infernalsuite/asp/api/4.0.0-SNAPSHOT/api-4.0.0-20250408.060259-11.jar!/com/infernalsuite/asp/api/world/properties/SlimePropertyMap.class" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2vbJ2JnnPcIIHqUEF6XU3OpQIyi" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.depenizen [clean,package,install].executor": "Run",
+    "Maven.linizen [clean,package,install].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/david/Documents/GitHub/Linizen",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Linizen" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Linizen" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f986d0ca-cf72-40e8-b9e5-cf7112099946" name="Changes" comment="" />
+      <created>1744407632453</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1744407632453</updated>
+      <workItem from="1744407633372" duration="3561000" />
+      <workItem from="1744447711254" duration="7122000" />
+      <workItem from="1744468897044" duration="7714000" />
+      <workItem from="1744562509794" duration="3387000" />
+      <workItem from="1744637334556" duration="4218000" />
+      <workItem from="1744704540920" duration="7194000" />
+      <workItem from="1744731404870" duration="1928000" />
+      <workItem from="1744831855971" duration="1395000" />
+      <workItem from="1744833363722" duration="181000" />
+    </task>
+    <task id="LOCAL-00001" summary="bulk cleanup">
+      <option name="closed" value="true" />
+      <created>1744411103928</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1744411103928</updated>
+    </task>
+    <task id="LOCAL-00002" summary="convert to linizen">
+      <option name="closed" value="true" />
+      <created>1744411131925</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1744411131925</updated>
+    </task>
+    <task id="LOCAL-00003" summary="match denizen conventions">
+      <option name="closed" value="true" />
+      <created>1744489339173</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1744489339173</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add executorutil">
+      <option name="closed" value="true" />
+      <created>1744580954898</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1744580954898</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add slimeworldloadertag">
+      <option name="closed" value="true" />
+      <created>1744580985956</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744580985956</updated>
+    </task>
+    <task id="LOCAL-00006" summary="add slimeworldtag">
+      <option name="closed" value="true" />
+      <created>1744717402947</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744717402947</updated>
+    </task>
+    <task id="LOCAL-00007" summary="fixes, cleanup">
+      <option name="closed" value="true" />
+      <created>1744717424299</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744717424299</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="bulk cleanup" />
+    <MESSAGE value="convert to linizen" />
+    <MESSAGE value="match denizen conventions" />
+    <MESSAGE value="add executorutil" />
+    <MESSAGE value="add slimeworldloadertag" />
+    <MESSAGE value="add slimeworldtag" />
+    <MESSAGE value="fixes, cleanup" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixes, cleanup" />
+  </component>
+</project>

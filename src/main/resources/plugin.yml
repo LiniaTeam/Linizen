@@ -1,0 +1,7 @@
+name: Linizen
+authors: ['The DenizenScript Team']
+version: ${project.version} (build ${BUILD_NUMBER})
+main: org.linia.linizen.Linizen
+depend: [Denizen]
+
+api-version: '1.13'
