@@ -14,6 +14,7 @@ import com.infernalsuite.asp.api.world.properties.SlimePropertyMap;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.linia.linizen.bridges.ASP.objects.SlimeWorldLoaderTag;
 import org.linia.linizen.bridges.ASP.objects.SlimeWorldTag;
 import org.linia.linizen.utils.ExecutorUtil;
@@ -73,10 +74,14 @@ public class SlimeWorldCommand extends AbstractCommand {
                         ExecutorUtil.runSyncAndWait(() -> {
                             try {
                                 ASPBridge.instance.loadWorld(slimeWorld, true);
-                                Location loc = new Location(Bukkit.getWorld(sName), 0, 61, 0);
-                                loc.getBlock().setType(Material.BEDROCK);
-                                scriptEntry.saveObject("block_location", new LocationTag(loc));
-                                scriptEntry.saveObject("created_world", new SlimeWorldTag(slimeWorld));
+                                World world = Bukkit.getWorld(sName);
+                                if (world != null) {
+                                    Location loc = new Location(world, 0, 61, 0);
+                                    world.setSpawnLocation(loc.add(0, 1, 0));
+                                    loc.getBlock().setType(Material.BEDROCK);
+                                    scriptEntry.saveObject("block_location", new LocationTag(loc));
+                                    scriptEntry.saveObject("created_world", new SlimeWorldTag(slimeWorld));
+                                }
                             }
                             catch (Exception e) {
                                 Debug.echoError(e);
