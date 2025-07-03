@@ -7,12 +7,18 @@ import com.denizenscript.denizencore.objects.core.ListTag;
 import com.denizenscript.denizencore.tags.PseudoObjectTagBase;
 import com.denizenscript.denizencore.tags.TagManager;
 import com.infernalsuite.asp.api.AdvancedSlimePaperAPI;
-import org.linia.linizen.bridges.ASP.loaders.FileLoader;
-import org.linia.linizen.bridges.ASP.objects.SlimeWorldLoaderTag;
+import com.infernalsuite.asp.api.exceptions.CorruptedWorldException;
+import com.infernalsuite.asp.api.exceptions.NewerFormatException;
+import com.infernalsuite.asp.api.exceptions.UnknownWorldException;
+import com.infernalsuite.asp.api.loaders.SlimeLoader;
+import com.infernalsuite.asp.api.world.SlimeWorld;
+import com.infernalsuite.asp.api.world.properties.SlimePropertyMap;
+import org.linia.linizen.bridges.ASP.commands.SlimeWorldCommand;
+import org.linia.linizen.bridges.ASP.objects.FileWorldLoaderTag;
 import org.linia.linizen.bridges.ASP.objects.SlimeWorldTag;
 import org.linia.linizen.bridges.Bridge;
 
-import java.io.File;
+import java.io.IOException;
 
 public class ASPBridge implements Bridge {
 
@@ -22,13 +28,17 @@ public class ASPBridge implements Bridge {
     public void init() {
         instance = AdvancedSlimePaperAPI.instance();
         /* ASP Objects */
-        ObjectFetcher.registerWithObjectFetcher(SlimeWorldLoaderTag.class, SlimeWorldLoaderTag.tagProcessor).generateBaseTag();
+        ObjectFetcher.registerWithObjectFetcher(FileWorldLoaderTag.class, FileWorldLoaderTag.tagProcessor).generateBaseTag();
         ObjectFetcher.registerWithObjectFetcher(SlimeWorldTag.class, SlimeWorldTag.tagProcessor).generateBaseTag();
         new ASPTagBase();
         /* ASP Commands */
         DenizenCore.commandRegistry.registerCommand(SlimeWorldCommand.class);
         /* ASP Utils */
-        SlimeWorldLoaderTag.registerLoader("file_loader", new FileLoader(new File("slime_worlds")));
+        //SlimeWorldLoaderTag.registerLoader("file_loader", new FileLoader(new File("slime_worlds")));
+
+        TagManager.registerStaticTagBaseHandler(FileWorldLoaderTag.class, FileWorldLoaderTag.class, "fileworldloader", (attribute, input) -> {
+            return input;
+        });
     }
 
     static class ASPTagBase extends PseudoObjectTagBase<ASPTagBase> {
@@ -55,17 +65,6 @@ public class ASPBridge implements Bridge {
             });
 
             // <--[tag]
-            // @attribute <asp.loaders>
-            // @returns ListTag(SlimeWorldLoaderTag)
-            // @plugin Linizen, ASP
-            // @description
-            // Returns a list of all known loaders.
-            // -->
-            tagProcessor.registerTag(ListTag.class, "loaders", (attribute, object) -> {
-                return new ListTag(SlimeWorldLoaderTag.loaders.values());
-            });
-
-            // <--[tag]
             // @attribute <asp.worlds_in_use>
             // @returns ListTag
             // @plugin Linizen, ASP
@@ -78,4 +77,8 @@ public class ASPBridge implements Bridge {
         }
     }
 
+    // https://github.com/InfernalSuite/AdvancedSlimePaper/blob/a192a031930f76dda4d68457e8381090b9e022bc/plugin/src/main/java/com/infernalsuite/asp/plugin/commands/SlimeCommand.java#L30
+    public static SlimeWorld getWorldReadyForCloning(String name, SlimeLoader loader, SlimePropertyMap propertyMap) throws CorruptedWorldException, NewerFormatException, UnknownWorldException, IOException {
+        return instance.readWorld(loader, name, false, propertyMap);
+    }
 }
