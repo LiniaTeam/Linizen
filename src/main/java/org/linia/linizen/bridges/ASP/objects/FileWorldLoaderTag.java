@@ -47,6 +47,10 @@ public class FileWorldLoaderTag implements ObjectTag, SlimeLoader {
         return loaders.put(folderName, new FileWorldLoaderTag(folderName, folder));
     }
 
+    public static boolean matches(String string) {
+        return valueOf(string, null) != null;
+    }
+
     public FileWorldLoaderTag(String name, File worldDir) {
         this.worldDir = worldDir;
         this.name = name;

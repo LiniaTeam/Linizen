@@ -9,16 +9,13 @@ import com.denizenscript.denizencore.objects.core.ElementTag;
 import com.denizenscript.denizencore.tags.Attribute;
 import com.denizenscript.denizencore.tags.ObjectTagProcessor;
 import com.denizenscript.denizencore.tags.TagContext;
-import com.infernalsuite.asp.api.loaders.SlimeLoader;
 import com.infernalsuite.asp.api.world.SlimeWorld;
 import com.infernalsuite.asp.api.world.SlimeWorldInstance;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.linia.linizen.bridges.ASP.ASPBridge;
 
 import java.io.IOException;
-import java.util.Map;
 
 public class SlimeWorldTag implements ObjectTag, Adjustable {
 
@@ -68,19 +65,13 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
 
         // <--[tag]
         // @attribute <SlimeWorldTag.get_loader>
-        // @returns SlimeWorldLoaderTag
+        // @returns FileWorldLoaderTag
         // @plugin Linizen, ASP
         // @description
-        // Returns a loader which this world is loaded from.
+        // Returns a file loader which this world is loaded from, if any.
         // -->
-        tagProcessor.registerTag(SlimeWorldLoaderTag.class, "get_loader", (attribute, object) -> {
-            SlimeLoader loader = object.slimeWorld.getLoader();
-            for (Map.Entry<String, SlimeWorldLoaderTag> e : SlimeWorldLoaderTag.loaders.entrySet()) {
-                if (e.getValue().loader == loader) {
-                    return e.getValue();
-                }
-            }
-            return null;
+        tagProcessor.registerTag(FileWorldLoaderTag.class, "get_file_loader", (attribute, object) -> {
+            return object.slimeWorld.getLoader() instanceof FileWorldLoaderTag f ? f : null;
         });
 
         // <--[tag]
@@ -123,11 +114,9 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
                 return;
             }
             World world = object.getWorld();
-            for (Player player : world.getPlayers()) {
-                if (player.isOnline()) {
-                    mechanism.echoError("Could not unload world, players are there.");
-                    return;
-                }
+            if (!world.getPlayers().isEmpty()) {
+                mechanism.echoError("Could not unload world, players are there.");
+                return;
             }
             if (!Bukkit.unloadWorld(world, input.asBoolean())) {
                 mechanism.echoError("Saving for SlimeWorld " + world.getName() + " refused by system.");
