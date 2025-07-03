@@ -13,6 +13,7 @@ import com.infernalsuite.asp.api.exceptions.UnknownWorldException;
 import com.infernalsuite.asp.api.loaders.SlimeLoader;
 import com.infernalsuite.asp.api.world.SlimeWorld;
 import com.infernalsuite.asp.api.world.properties.SlimePropertyMap;
+import org.linia.linizen.bridges.ASP.commands.SlimeWorldCommand;
 import org.linia.linizen.bridges.ASP.objects.FileWorldLoaderTag;
 import org.linia.linizen.bridges.ASP.objects.SlimeWorldTag;
 import org.linia.linizen.bridges.Bridge;

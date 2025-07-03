@@ -1,4 +1,4 @@
-package org.linia.linizen.bridges.ASP;
+package org.linia.linizen.bridges.ASP.commands;
 
 import com.denizenscript.denizen.objects.LocationTag;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.linia.linizen.bridges.ASP.ASPBridge;
 import org.linia.linizen.bridges.ASP.objects.FileWorldLoaderTag;
 import org.linia.linizen.bridges.ASP.objects.SlimeWorldTag;
 import org.linia.linizen.utils.ExecutorUtil;
