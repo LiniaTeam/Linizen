@@ -3,6 +3,7 @@ package org.linia.linizen.bridges.ASP.commands;
 import com.denizenscript.denizen.objects.LocationTag;
 import com.denizenscript.denizencore.scripts.ScriptEntry;
 import com.denizenscript.denizencore.scripts.commands.AbstractCommand;
+import com.denizenscript.denizencore.scripts.commands.Holdable;
 import com.denizenscript.denizencore.scripts.commands.generator.*;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
 import com.infernalsuite.asp.api.exceptions.CorruptedWorldException;
@@ -24,7 +25,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.concurrent.CompletableFuture;
 
-public class SlimeWorldCommand extends AbstractCommand {
+public class SlimeWorldCommand extends AbstractCommand implements Holdable {
 
     public SlimeWorldCommand() {
         setName("slimeworld");
