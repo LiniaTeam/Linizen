@@ -147,7 +147,7 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
 
     @Override
     public String identify() {
-        return slimeWorld.getName();
+        return "sw@" + slimeWorld.getName();
     }
 
     @Override
