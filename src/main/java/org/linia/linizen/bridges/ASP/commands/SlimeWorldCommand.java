@@ -73,8 +73,8 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
                                 World world = Bukkit.getWorld(name);
                                 if (world != null) {
                                     Location loc = new Location(world, 0, 61, 0);
-                                    world.setSpawnLocation(loc.add(0, 1, 0));
                                     loc.getBlock().setType(Material.BEDROCK);
+                                    world.setSpawnLocation(loc.add(0, 1, 0));
                                     scriptEntry.saveObject("block_location", new LocationTag(loc));
                                     scriptEntry.saveObject("created_world", new SlimeWorldTag(slimeWorld));
                                 }
