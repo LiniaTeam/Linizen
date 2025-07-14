@@ -40,14 +40,10 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
     public static void autoExecute(ScriptEntry scriptEntry,
                                    @ArgName("action") @ArgLinear Action action,
                                    @ArgName("name") @ArgLinear String name,
-                                   @ArgName("loader") @ArgDefaultNull @ArgPrefixed FileWorldLoaderTag loader,
-                                   @ArgName("from") @ArgPrefixed @ArgDefaultNull SlimeWorldTag slimeWorldTag) {
+                                   @ArgName("loader") @ArgPrefixed FileWorldLoaderTag loader,
+                                   @ArgName("from") @ArgPrefixed @ArgDefaultNull String cloneFrom) {
         switch (action) {
             case CREATE -> {
-                if (loader == null) {
-                    Debug.echoError("Need to specify loader");
-                    return;
-                }
                 if (Bukkit.getWorld(name) != null) {
                     Debug.echoError("World " + name + " already exists");
                     return;
@@ -119,20 +115,20 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
                 });
             }
             case CLONE -> {
-                if (!isValid(name)) {
+                if (!isValid(name) || !isValid(cloneFrom)) {
                     return;
                 }
-                if (name.equals(slimeWorldTag.slimeWorld.getName())) {
+                if (name.equals(cloneFrom)) {
                     Debug.echoError("Cannot clone world to itself.");
                     return;
                 }
                 worldsInUse.add(name);
-                SlimeWorld copyFrom = slimeWorldTag.slimeWorld;
+                worldsInUse.add(cloneFrom);
 
                 CompletableFuture.runAsync(() -> {
                     try {
-                        SlimeWorld sw = ASPBridge.getWorldReadyForCloning(copyFrom.getName(), copyFrom.getLoader(), copyFrom.getPropertyMap());
-                        SlimeWorld cloned = sw.clone(name, copyFrom.getLoader());
+                        SlimeWorld sw = ASPBridge.getWorldReadyForCloning(cloneFrom, loader, new SlimePropertyMap());
+                        SlimeWorld cloned = sw.clone(name, loader);
 
                         ExecutorUtil.runSyncAndWait(() -> {
                             try {
@@ -149,6 +145,7 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
                     }
                     finally {
                         worldsInUse.remove(name);
+                        worldsInUse.remove(cloneFrom);
                     }
                 });
             }

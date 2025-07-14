@@ -9,7 +9,6 @@ import com.denizenscript.denizencore.tags.ObjectTagProcessor;
 import com.denizenscript.denizencore.tags.TagContext;
 import com.denizenscript.denizencore.utilities.debugging.Debug;
 import com.infernalsuite.asp.api.exceptions.UnknownWorldException;
-import com.infernalsuite.asp.api.loaders.SlimeLoader;
 
 import java.io.*;
 import java.nio.file.NotDirectoryException;
@@ -18,11 +17,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FileWorldLoaderTag implements ObjectTag, SlimeLoader {
+public class FileWorldLoaderTag implements SlimeLoaderTag {
 
     private static final String FILE_EXTENSION = ".slime";
     private static final FilenameFilter WORLD_FILE_FILTER = (dir, name) -> name.endsWith(FILE_EXTENSION);
-    private static final HashMap<String, FileWorldLoaderTag> loaders = new HashMap<>();
+    public static final HashMap<String, FileWorldLoaderTag> loaders = new HashMap<>();
 
     @Fetchable("fwl")
     public static FileWorldLoaderTag valueOf(String folderName, TagContext context) {
@@ -32,19 +31,7 @@ public class FileWorldLoaderTag implements ObjectTag, SlimeLoader {
         if (folderName.startsWith("fwl@")) {
             folderName = folderName.substring("fwl@".length());
         }
-        if (loaders.containsKey(folderName)) {
-            return loaders.get(folderName);
-        }
-        File folder = new File(folderName);
-        if (folder.exists() && !folder.isDirectory()) {
-            Debug.echoError("A file with the same name as the folder '" + folderName + "' already exists. Please delete it and try again.");
-            return null;
-        }
-        if (!folder.exists() && !folder.mkdirs()) {
-            Debug.echoError("Failed to create the folder '" + folderName + "'.");
-            return null;
-        }
-        return loaders.put(folderName, new FileWorldLoaderTag(folderName, folder));
+        return loaders.getOrDefault(folderName, null);
     }
 
     public static boolean matches(String string) {
