@@ -5,6 +5,8 @@ import com.infernalsuite.asp.api.world.SlimeWorldInstance;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.linia.linizen.bridges.ASP.ASPBridge;
+import org.linia.linizen.extensions.ExtensionsRegistry;
+import org.linia.linizen.oneblock.OneBlock;
 
 import java.io.IOException;
 
@@ -18,6 +20,8 @@ public class Linizen extends JavaPlugin {
         Debug.log("Linizen loading...");
         saveDefaultConfig();
         new ASPBridge().init();
+        OneBlock.init();
+        ExtensionsRegistry.register();
     }
 
     @Override
