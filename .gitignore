@@ -10,4 +10,4 @@ dependency-reduced-pom.xml
 *.bak
 *.exe
 /.idea
-/.idea
+/target/
