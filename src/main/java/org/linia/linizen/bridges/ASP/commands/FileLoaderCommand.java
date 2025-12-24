@@ -16,6 +16,18 @@ import java.util.List;
 
 public class FileLoaderCommand extends AbstractCommand implements Holdable {
 
+    // <--[command]
+    // @Name FileLoader
+    // @Syntax fileloader [create:<name>|...]
+    // @Required 1
+    // @Maximum 1
+    // @Short Creates a new fileloader with given names.
+    // @Group Linizen
+    //
+    // @Description
+    // This command is waitable.
+    // -->
+
     public FileLoaderCommand() {
         setName("fileloader");
         setSyntax("fileloader [create:<name>|...]");

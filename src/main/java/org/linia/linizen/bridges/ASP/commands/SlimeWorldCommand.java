@@ -27,6 +27,34 @@ import java.util.concurrent.CompletableFuture;
 
 public class SlimeWorldCommand extends AbstractCommand implements Holdable {
 
+    // <--[command]
+    // @Name SlimeWorld
+    // @Syntax slimeworld [create/load/clone] [<name>] (loader:<loader>) (from:<world>)
+    // @Required 2
+    // @Maximum 4
+    // @Short Manages slimeworlds.
+    // @Group Linizen
+    //
+    // @Description
+    // This can create / load / clone slimeworlds.
+    // When using 'create' argument: entries block_location and created_world are available.
+    // When using 'load' argument: entry loaded_world is available.
+    // When using 'clone' argument: entry cloned_world is available.
+    //
+    // @Usage
+    // Creates a new slimeworld with name 'nice'.
+    // - slimeworld create nice loader:<[some_loader]>
+    //
+    // @Usage
+    // Loads an existing slimeworld with given name.
+    // - slimeworld load nice loader:<[some_loader]>
+    //
+    // @Usage
+    // Clones a world.
+    // - slimeworld clone bobs_island loader:<[some_loader]> from:<[template_world]>
+    //
+    // -->
+
     public SlimeWorldCommand() {
         setName("slimeworld");
         setSyntax("slimeworld [create/load/clone] [<name>] (loader:<loader>) (from:<world>)");

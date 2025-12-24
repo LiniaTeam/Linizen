@@ -110,7 +110,8 @@ public class FileWorldLoaderTag implements SlimeLoaderTag {
         tagProcessor.registerTag(ListTag.class, "all_worlds", (attribute, object) -> {
             try {
                 return new ListTag(object.listWorlds(), ElementTag::new);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 Debug.echoError(e);
                 return null;
             }
