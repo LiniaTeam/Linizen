@@ -16,6 +16,7 @@ import org.bukkit.World;
 import org.linia.linizen.bridges.ASP.ASPBridge;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 public class SlimeWorldTag implements ObjectTag, Adjustable {
 
@@ -35,15 +36,16 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
         return valueOf(string, null) != null;
     }
 
-    /*
-    * Maybe in the future if it becomes RAM issue, we could save only worldsName
-    * and not whole instance. In which case we would need to reconstruct it each
-    * time we are calling it. (With something like SlimeWorldTag#getSlimeWorld)
-    */
-    public SlimeWorld slimeWorld;
+    private final String worldName;
+    private final WeakReference<SlimeWorld> slimeWorldRef;
 
     public SlimeWorldTag(SlimeWorld slimeWorld) {
-        this.slimeWorld = slimeWorld;
+        this.worldName = slimeWorld.getName();
+        this.slimeWorldRef = new WeakReference<>(slimeWorld);
+    }
+
+    public SlimeWorld getSlimeWorld() {
+        return slimeWorldRef.get();
     }
 
     public static void register() {
@@ -56,11 +58,7 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
         // Returns whether the world is actually loaded.
         // -->
         tagProcessor.registerTag(ElementTag.class, "is_loaded", (attribute, object) -> {
-            try {
-                return new ElementTag(object.slimeWorld.getLoader().worldExists(object.slimeWorld.getName()));
-            } catch (IOException e) {
-                return new ElementTag(false);
-            }
+            return new ElementTag(ASPBridge.instance.getLoadedWorld(object.worldName) != null);
         });
 
         // <--[tag]
@@ -71,7 +69,8 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
         // Returns a file loader which this world is loaded from, if any.
         // -->
         tagProcessor.registerTag(FileWorldLoaderTag.class, "get_file_loader", (attribute, object) -> {
-            return object.slimeWorld.getLoader() instanceof FileWorldLoaderTag f ? f : null;
+            SlimeWorld sw = object.getSlimeWorld();
+            return (sw != null && sw.getLoader() instanceof FileWorldLoaderTag f) ? f : null;
         });
 
         // <--[tag]
@@ -93,8 +92,13 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
         // Saves the world.
         // -->
         tagProcessor.registerMechanism("save", false, (object, mechanism) -> {
+            SlimeWorld sw = object.getSlimeWorld();
+            if (sw == null) {
+                mechanism.echoError("World is not loaded");
+                return;
+            }
             try {
-                ASPBridge.instance.saveWorld(object.slimeWorld);
+                ASPBridge.instance.saveWorld(sw);
             } catch (IOException e) {
                 mechanism.echoError("Could not save world");
             }
@@ -125,7 +129,7 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
     }
 
     public World getWorld() {
-        return Bukkit.getWorld(slimeWorld.getName());
+        return Bukkit.getWorld(worldName);
     }
 
     public String prefix = "SlimeWorld";
@@ -147,7 +151,7 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
 
     @Override
     public String identify() {
-        return "sw@" + slimeWorld.getName();
+        return "sw@" + worldName;
     }
 
     @Override
