@@ -18,7 +18,6 @@ public class Linizen extends JavaPlugin {
     public void onEnable() {
         instance = this;
         Debug.log("Linizen loading...");
-        saveDefaultConfig();
         new ASPBridge().init();
         OneBlock.init();
         ExtensionsRegistry.register();
