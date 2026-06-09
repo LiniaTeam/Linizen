@@ -6,8 +6,6 @@ dependency-reduced-pom.xml
 .idea/
 *.iml
 
-# Temporary/etc.
+# Temporary
 *.bak
 *.exe
-/.idea
-/target/
