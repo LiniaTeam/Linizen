@@ -9,7 +9,7 @@ A bridge plugin between [AdvancedSlimePaper](https://github.com/InfernalSuite/Ad
 
 ## Build
 
-Requires Java 16+ and Maven.
+Requires Java 16+ (one should prefer 25) and Maven.
 
 ```bash
 mvn clean package install
