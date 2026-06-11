@@ -17,6 +17,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.linia.linizen.bridges.ASP.ASPBridge;
+import org.linia.linizen.bridges.ASP.SlimeWorldFlagHandler;
 import org.linia.linizen.bridges.ASP.objects.FileWorldLoaderTag;
 import org.linia.linizen.bridges.ASP.objects.SlimeWorldTag;
 import org.linia.linizen.utils.ExecutorUtil;
@@ -94,6 +95,7 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
                         ExecutorUtil.runSyncAndWait(() -> {
                             try {
                                 ASPBridge.instance.loadWorld(slimeWorld, true);
+                                SlimeWorldFlagHandler.loadFlags(slimeWorld);
                                 World world = Bukkit.getWorld(name);
                                 if (world != null) {
                                     Location loc = new Location(world, 0, 61, 0);
@@ -127,6 +129,7 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
                         ExecutorUtil.runSyncAndWait(() -> {
                             try {
                                 ASPBridge.instance.loadWorld(slimeWorld, true);
+                                SlimeWorldFlagHandler.loadFlags(slimeWorld);
                                 scriptEntry.saveObject("loaded_world", new SlimeWorldTag(slimeWorld));
                             }
                             catch (IllegalArgumentException e) {
@@ -161,6 +164,7 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
                         ExecutorUtil.runSyncAndWait(() -> {
                             try {
                                 ASPBridge.instance.loadWorld(cloned, true);
+                                SlimeWorldFlagHandler.initEmpty(cloned.getName());
                                 scriptEntry.saveObject("cloned_world", new SlimeWorldTag(cloned));
                             }
                             catch (IllegalArgumentException e) {
