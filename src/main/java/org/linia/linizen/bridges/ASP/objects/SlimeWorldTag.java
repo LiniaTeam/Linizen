@@ -1,6 +1,8 @@
 package org.linia.linizen.bridges.ASP.objects;
 
 import com.denizenscript.denizen.objects.WorldTag;
+import com.denizenscript.denizencore.flags.AbstractFlagTracker;
+import com.denizenscript.denizencore.flags.FlaggableObject;
 import com.denizenscript.denizencore.objects.Adjustable;
 import com.denizenscript.denizencore.objects.Fetchable;
 import com.denizenscript.denizencore.objects.Mechanism;
@@ -14,11 +16,12 @@ import com.infernalsuite.asp.api.world.SlimeWorldInstance;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.linia.linizen.bridges.ASP.ASPBridge;
+import org.linia.linizen.bridges.ASP.SlimeWorldFlagHandler;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 
-public class SlimeWorldTag implements ObjectTag, Adjustable {
+public class SlimeWorldTag implements ObjectTag, Adjustable, FlaggableObject {
 
     @Fetchable("sw@")
     public static SlimeWorldTag valueOf(String string, TagContext context) {
@@ -48,7 +51,23 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
         return slimeWorldRef.get();
     }
 
+    @Override
+    public AbstractFlagTracker getFlagTracker() {
+        return SlimeWorldFlagHandler.trackers.get(worldName);
+    }
+
+    @Override
+    public void reapplyTracker(AbstractFlagTracker tracker) {
+    }
+
+    @Override
+    public String getReasonNotFlaggable() {
+        return "is the SlimeWorld loaded?";
+    }
+
     public static void register() {
+
+        AbstractFlagTracker.registerFlagHandlers(tagProcessor);
 
         // <--[tag]
         // @attribute <SlimeWorldTag.is_loaded>
@@ -62,7 +81,7 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
         });
 
         // <--[tag]
-        // @attribute <SlimeWorldTag.get_loader>
+        // @attribute <SlimeWorldTag.get_file_loader>
         // @returns FileWorldLoaderTag
         // @plugin Linizen, ASP
         // @description
@@ -98,6 +117,7 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
                 return;
             }
             try {
+                SlimeWorldFlagHandler.flushToWorld(sw);
                 ASPBridge.instance.saveWorld(sw);
             } catch (IOException e) {
                 mechanism.echoError("Could not save world");
@@ -122,8 +142,17 @@ public class SlimeWorldTag implements ObjectTag, Adjustable {
                 mechanism.echoError("Could not unload world, players are there.");
                 return;
             }
+            if (input.asBoolean()) {
+                SlimeWorld sw = object.getSlimeWorld();
+                if (sw != null) {
+                    SlimeWorldFlagHandler.flushToWorld(sw);
+                }
+            }
             if (!Bukkit.unloadWorld(world, input.asBoolean())) {
                 mechanism.echoError("Saving for SlimeWorld " + world.getName() + " refused by system.");
+            }
+            else {
+                SlimeWorldFlagHandler.unloadFlags(object.worldName);
             }
         });
     }

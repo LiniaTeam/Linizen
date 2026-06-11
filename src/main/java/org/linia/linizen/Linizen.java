@@ -1,14 +1,12 @@
 package org.linia.linizen;
 
 import com.denizenscript.denizencore.utilities.debugging.Debug;
-import com.infernalsuite.asp.api.world.SlimeWorldInstance;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.linia.linizen.bridges.ASP.ASPBridge;
+import org.linia.linizen.bridges.ASP.SlimeWorldFlagHandler;
 import org.linia.linizen.extensions.ExtensionsRegistry;
 import org.linia.linizen.oneblock.OneBlock;
-
-import java.io.IOException;
 
 public class Linizen extends JavaPlugin {
 
@@ -26,16 +24,9 @@ public class Linizen extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
         Debug.log("Saving slimeworlds...");
-        for (SlimeWorldInstance s : ASPBridge.instance.getLoadedWorlds()) {
-            try {
-                ASPBridge.instance.saveWorld(s);
-            }
-            catch (IOException e) {
-                Debug.echoError(e);
-            }
-        }
+        SlimeWorldFlagHandler.flushAll();
+        ASPBridge.saveAll();
     }
 
 }
