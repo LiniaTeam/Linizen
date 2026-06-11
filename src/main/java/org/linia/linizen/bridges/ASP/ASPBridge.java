@@ -7,6 +7,7 @@ import com.denizenscript.denizencore.objects.core.ListTag;
 import com.denizenscript.denizencore.objects.core.MapTag;
 import com.denizenscript.denizencore.tags.PseudoObjectTagBase;
 import com.denizenscript.denizencore.tags.TagManager;
+import com.denizenscript.denizencore.utilities.debugging.Debug;
 import com.denizenscript.denizencore.utilities.text.StringHolder;
 import com.infernalsuite.asp.api.AdvancedSlimePaperAPI;
 import com.infernalsuite.asp.api.exceptions.CorruptedWorldException;
@@ -14,6 +15,7 @@ import com.infernalsuite.asp.api.exceptions.NewerFormatException;
 import com.infernalsuite.asp.api.exceptions.UnknownWorldException;
 import com.infernalsuite.asp.api.loaders.SlimeLoader;
 import com.infernalsuite.asp.api.world.SlimeWorld;
+import com.infernalsuite.asp.api.world.SlimeWorldInstance;
 import com.infernalsuite.asp.api.world.properties.SlimePropertyMap;
 import org.linia.linizen.bridges.ASP.commands.FileLoaderCommand;
 import org.linia.linizen.bridges.ASP.commands.SlimeWorldCommand;
@@ -48,7 +50,18 @@ public class ASPBridge implements Bridge {
         });
     }
 
-    static class ASPTagBase extends PseudoObjectTagBase<ASPTagBase> {
+    public static void saveAll() {
+        for (SlimeWorldInstance s : instance.getLoadedWorlds()) {
+            try {
+                instance.saveWorld(s);
+            }
+            catch (IOException e) {
+                Debug.echoError(e);
+            }
+        }
+    }
+
+    public static class ASPTagBase extends PseudoObjectTagBase<ASPTagBase> {
 
         public static ASPTagBase instance;
 
@@ -69,6 +82,17 @@ public class ASPBridge implements Bridge {
             // -->
             tagProcessor.registerTag(ListTag.class, "loaded_worlds", (attribute, object) -> {
                 return new ListTag(ASPBridge.instance.getLoadedWorlds(), SlimeWorldTag::new);
+            });
+
+            // <--[tag]
+            // @attribute <asp.is_loaded[<name>]>
+            // @returns ElementTag(Boolean)
+            // @plugin Linizen, ASP
+            // @description
+            // Returns whether the world with a given name is loaded.
+            // -->
+            tagProcessor.registerTag(ElementTag.class, ElementTag.class, "is_loaded", (attribute, object, input) -> {
+                return new ElementTag(ASPBridge.instance.getLoadedWorld(input.asString()) != null);
             });
 
             // <--[tag]
