@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.linia.linizen.bridges.ASP.ASPBridge;
 import org.linia.linizen.bridges.ASP.SlimeWorldFlagHandler;
+import org.linia.linizen.bridges.ASP.worldloaders.AbstractSlimeWorldLoader;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -70,17 +71,17 @@ public class SlimeWorldTag implements ObjectTag, Adjustable, FlaggableObject {
         AbstractFlagTracker.registerFlagHandlers(tagProcessor);
 
         // <--[tag]
-        // @attribute <SlimeWorldTag.get_file_loader>
-        // @returns FileWorldLoaderTag
+        // @attribute <SlimeWorldTag.loader>
+        // @returns AbstractSlimeWorldLoaderTag
         // @plugin Linizen, ASP
         // @description
-        // Returns a file loader which this world is loaded from, if any.
+        // Returns a loader which this world is loaded from, if any.
         // -->
-        tagProcessor.registerTag(FileWorldLoaderTag.class, "get_file_loader", (attribute, object) -> {
+        tagProcessor.registerTag(AbstractSlimeWorldLoader.class, "loader", (attribute, object) -> {
             if (!requireLoadedWorld(object, attribute)) {
                 return null;
             }
-            return (object.getSlimeWorld().getLoader() instanceof FileWorldLoaderTag f) ? f : null;
+            return (object.getSlimeWorld().getLoader() instanceof AbstractSlimeWorldLoader l) ? l : null;
         });
 
         // <--[tag]
@@ -176,7 +177,7 @@ public class SlimeWorldTag implements ObjectTag, Adjustable, FlaggableObject {
     }
 
     public boolean isLoaded() {
-        return getSlimeWorld() == null || !ASPBridge.instance.worldLoaded(getSlimeWorld());
+        return getSlimeWorld() != null && ASPBridge.instance.worldLoaded(getSlimeWorld());
     }
 
     public World getWorld() {

@@ -18,8 +18,8 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.linia.linizen.bridges.ASP.ASPBridge;
 import org.linia.linizen.bridges.ASP.SlimeWorldFlagHandler;
-import org.linia.linizen.bridges.ASP.objects.FileWorldLoaderTag;
 import org.linia.linizen.bridges.ASP.objects.SlimeWorldTag;
+import org.linia.linizen.bridges.ASP.worldloaders.AbstractSlimeWorldLoader;
 import org.linia.linizen.utils.ExecutorUtil;
 
 import java.io.IOException;
@@ -58,7 +58,7 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
 
     public SlimeWorldCommand() {
         setName("slimeworld");
-        setSyntax("slimeworld [create/load/clone] [<name>] (loader:<loader>) (from:<world>)");
+        setSyntax("slimeworld [create/load/clone] [<name>] (loader:<loader>) (from:<world>) (from_loader:<loader>)");
         isProcedural = false;
         setRequiredArguments(3, 4);
         autoCompile();
@@ -69,8 +69,9 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
     public static void autoExecute(ScriptEntry scriptEntry,
                                    @ArgName("action") @ArgLinear Action action,
                                    @ArgName("name") @ArgLinear String name,
-                                   @ArgName("loader") @ArgPrefixed FileWorldLoaderTag loader,
-                                   @ArgName("from") @ArgPrefixed @ArgDefaultNull String cloneFrom) {
+                                   @ArgName("loader") @ArgPrefixed AbstractSlimeWorldLoader loader,
+                                   @ArgName("from") @ArgPrefixed @ArgDefaultNull String cloneFrom,
+                                   @ArgName("from_loader") @ArgPrefixed @ArgDefaultNull AbstractSlimeWorldLoader cloneLoader) {
         switch (action) {
             case CREATE -> {
                 if (Bukkit.getWorld(name) != null) {
@@ -158,7 +159,7 @@ public class SlimeWorldCommand extends AbstractCommand implements Holdable {
 
                 CompletableFuture.runAsync(() -> {
                     try {
-                        SlimeWorld sw = ASPBridge.getWorldReadyForCloning(cloneFrom, loader, new SlimePropertyMap());
+                        SlimeWorld sw = ASPBridge.getWorldReadyForCloning(cloneFrom, cloneLoader == null ? loader : cloneLoader, new SlimePropertyMap());
                         SlimeWorld cloned = sw.clone(name, loader);
 
                         ExecutorUtil.runSyncAndWait(() -> {
