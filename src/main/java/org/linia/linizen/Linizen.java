@@ -15,6 +15,7 @@ public class Linizen extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        saveDefaultConfig();
         Debug.log("Linizen loading...");
         new ASPBridge().init();
         OneBlock.init();

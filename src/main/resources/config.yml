@@ -1,0 +1,4 @@
+asp:
+  file-loaders:
+    # name: path
+    # worlds: plugins/Linizen/worlds
